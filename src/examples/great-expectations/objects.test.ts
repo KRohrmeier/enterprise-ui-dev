@@ -15,7 +15,7 @@ describe('toBe', () => {
 });
 
 describe('toEqual', () => {
-  test('similar objects should pass with #toEqual', () => {
+  test('similar objects should pass with #toEqual', () => { // toEqual is shallow comparison
     expect({ a: 1 }).toEqual({ a: 1 });
   });
 

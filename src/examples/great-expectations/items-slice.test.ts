@@ -10,22 +10,29 @@ it('returns an empty array as the initial state', () => {
   expect(reducer(undefined, { type: 'noop' })).toEqual([]);
 });
 
-it.todo('supports adding an item with the correct name', () => {
+it('supports adding an item with the correct name', () => {
   expect.hasAssertions();
   const result = reducer([], add({ name: 'iPhone' }));
+  expect(result).toEqual([expect.objectContaining({name: 'iPhone'})]);
 });
 
-it.todo('prefixes ids with "item-"', () => {
+it('prefixes ids with "item-"', () => {
   expect.hasAssertions();
   const result = reducer([], add({ name: 'iPhone' }));
+  expect(result).toEqual([
+    expect.objectContaining({ id: expect.stringMatching(/^item-/)})
+  ])
 });
 
-it.todo('defaults new items to a packed status of false', () => {
+it('defaults new items to a packed status of false', () => {
   expect.hasAssertions();
   const result = reducer([], add({ name: 'iPhone' }));
+  const [item] = result;
+  expect(result.length).toBe(1);
+  expect(item.packed).toBe(false); //not as fool-proof as above example
 });
 
-it.todo('supports removing an item', () => {
+it('supports removing an item', () => {
   expect.hasAssertions();
   const state = [
     {
@@ -34,8 +41,10 @@ it.todo('supports removing an item', () => {
       packed: false,
     },
   ];
-
   const result = reducer(state, remove({ id: '1' }));
+
+  // the only important thing here is that the attribute of the object just removed isn't still there
+  expect(result).not.toContain({ id:  expect.objectContaining({ id: '1' })})
 });
 
 it.todo('supports toggling an item', () => {
